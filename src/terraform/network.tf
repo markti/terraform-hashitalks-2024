@@ -67,3 +67,17 @@ module "network_monitor_diagnostic" {
   logs                       = ["VMProtectionAlerts"]
 
 }
+
+resource "random_string" "flowlogs" {
+  length  = 8
+  upper   = false
+  special = false
+}
+
+resource "azurerm_storage_account" "flowlogs" {
+  name                     = "stlogs${random_string.flowlogs.result}"
+  resource_group_name      = azurerm_resource_group.main.name
+  location                 = azurerm_resource_group.main.location
+  account_tier             = "Standard"
+  account_replication_type = "GZRS"
+}
