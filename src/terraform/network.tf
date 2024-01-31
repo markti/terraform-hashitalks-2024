@@ -58,7 +58,7 @@ resource "azurerm_subnet" "workload" {
 
 }
 
-module "azure-terraformer" {
+module "network_monitor_diagnostic" {
   source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
   version = "1.0.8"
 
