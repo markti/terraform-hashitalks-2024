@@ -60,7 +60,7 @@ resource "azurerm_subnet" "workload" {
 
 module "network_monitor_diagnostic" {
   source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
-  version = "1.0.9"
+  version = "1.0.10"
 
   resource_id                = azurerm_virtual_network.main.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
