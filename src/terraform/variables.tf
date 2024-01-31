@@ -16,3 +16,6 @@ variable "vpn_address_space" {
 variable "vpn_application_id" {
   type = string
 }
+variable "github_token" {
+  type = string
+}
