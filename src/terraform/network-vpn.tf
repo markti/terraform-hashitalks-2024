@@ -8,7 +8,7 @@ resource "azurerm_public_ip" "vpn" {
   allocation_method = "Static"
 
 }
-/*
+
 resource "azurerm_virtual_network_gateway" "main" {
   name                = "vgw-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   location            = azurerm_resource_group.main.location
@@ -38,7 +38,6 @@ resource "azurerm_virtual_network_gateway" "main" {
 
   }
 }
-*/
 
 resource "azuread_application" "vpn" {
 
