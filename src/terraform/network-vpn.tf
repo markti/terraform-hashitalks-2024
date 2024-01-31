@@ -33,9 +33,8 @@ resource "azurerm_virtual_network_gateway" "main" {
     vpn_client_protocols = ["OpenVPN"]
     vpn_auth_types       = ["AAD"]
     aad_tenant           = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
-    aad_audience         = ""
+    aad_audience         = var.vpn_application_id == null ? azuread_application.vpn.client_id : var.vpn_application_id
     aad_issuer           = "https://sts.windows.net/${data.azurerm_client_config.current.tenant_id}/"
-
   }
 }
 
