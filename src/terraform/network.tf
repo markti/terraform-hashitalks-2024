@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "main" {
 }
 
 
-resource "azurerm_subnet" "gateway" {
+resource "azurerm_subnet" "vpn" {
 
   name                 = "GatewaySubnet"
   resource_group_name  = azurerm_resource_group.main.name
@@ -19,7 +19,7 @@ resource "azurerm_subnet" "gateway" {
 
 # minimum subnet size of /28
 # https://learn.microsoft.com/en-us/azure/dns/dns-private-resolver-overview
-resource "azurerm_subnet" "dns_resolver" {
+resource "azurerm_subnet" "dns" {
 
   name                 = "DnsResolverSubnet"
   resource_group_name  = azurerm_resource_group.main.name

@@ -10,3 +10,6 @@ variable "primary_region" {
 variable "address_space" {
   type = string
 }
+variable "vpn_address_space" {
+  type = string
+}
