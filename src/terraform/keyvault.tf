@@ -26,7 +26,7 @@ resource "azurerm_private_dns_zone" "keyvault" {
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
   name                  = azurerm_key_vault.main.name
   resource_group_name   = azurerm_resource_group.main.name
-  private_dns_zone_name = azurerm_private_dns_zone.acr.name
+  private_dns_zone_name = azurerm_private_dns_zone.keyvault.name
   virtual_network_id    = azurerm_virtual_network.main.id
 }
 
