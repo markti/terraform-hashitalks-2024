@@ -22,7 +22,7 @@ resource "azurerm_virtual_network_gateway" "main" {
   sku           = "VpnGw1AZ"
 
   ip_configuration {
-    name                          = "vnetGatewayConfig"
+    name                          = "default"
     public_ip_address_id          = azurerm_public_ip.vpn.id
     private_ip_address_allocation = "Dynamic"
     subnet_id                     = azurerm_subnet.vpn.id
