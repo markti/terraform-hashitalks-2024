@@ -16,7 +16,7 @@ resource "azurerm_container_registry" "main" {
 
 }
 
-resource "azurerm_dns_zone" "acr" {
+resource "azurerm_private_dns_zone" "example" {
   name                = "privatelink.azurecr.io"
   resource_group_name = azurerm_resource_group.main.name
 }
