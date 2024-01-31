@@ -39,3 +39,7 @@ resource "azurerm_virtual_network_gateway" "main" {
   }
 }
 */
+
+resource "azuread_application" "vpn" {
+  display_name = "${var.application_name}-${var.environment_name}-${random_string.main.result}-vpn"
+}
