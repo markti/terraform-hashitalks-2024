@@ -13,3 +13,6 @@ variable "address_space" {
 variable "vpn_address_space" {
   type = string
 }
+variable "vpn_application_id" {
+  type = string
+}

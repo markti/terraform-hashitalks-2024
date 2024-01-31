@@ -33,7 +33,7 @@ resource "azurerm_virtual_network_gateway" "main" {
     vpn_client_protocols = ["OpenVPN"]
     vpn_auth_types       = ["AAD"]
     aad_tenant           = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
-    aad_audience         = "2d4e6e16-f5df-45bf-91b0-c702247ce115"
+    aad_audience         = ""
     aad_issuer           = "https://sts.windows.net/${data.azurerm_client_config.current.tenant_id}/"
 
   }
@@ -41,5 +41,9 @@ resource "azurerm_virtual_network_gateway" "main" {
 */
 
 resource "azuread_application" "vpn" {
+
+  count = var.vpn_application_id != null ? 1 : 0
+
   display_name = "${var.application_name}-${var.environment_name}-${random_string.main.result}-vpn"
+
 }
