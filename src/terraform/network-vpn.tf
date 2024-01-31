@@ -42,7 +42,7 @@ resource "azurerm_virtual_network_gateway" "main" {
 
 resource "azuread_application" "vpn" {
 
-  count = var.vpn_application_id != null ? 1 : 0
+  count = var.vpn_application_id == null ? 1 : 0
 
   display_name = "${var.application_name}-${var.environment_name}-${random_string.main.result}-vpn"
 
