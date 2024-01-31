@@ -19,7 +19,7 @@ module "keyvault_monitor_diagnostic" {
   source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
   version = "1.0.10"
 
-  resource_id                = azurerm_virtual_network.main.id
+  resource_id                = azurerm_key_vault.main.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   logs                       = ["AuditEvent", "AzurePolicyEvaluationDetails"]
 
