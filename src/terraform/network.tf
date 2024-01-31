@@ -7,21 +7,24 @@ resource "azurerm_virtual_network" "main" {
 
 }
 
+
 resource "azurerm_subnet" "gateway" {
 
   name                 = "GatewaySubnet"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = [cidrsubnet(var.address_space, 3, 0)]
+  address_prefixes     = [cidrsubnet(var.address_space, 5, 0)]
 
 }
 
+# minimum subnet size of /28
+# https://learn.microsoft.com/en-us/azure/dns/dns-private-resolver-overview
 resource "azurerm_subnet" "dns_resolver" {
 
   name                 = "DnsResolverSubnet"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = [cidrsubnet(var.address_space, 3, 1)]
+  address_prefixes     = [cidrsubnet(var.address_space, 5, 1)]
 
 }
 
