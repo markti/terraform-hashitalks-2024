@@ -34,7 +34,7 @@ resource "azurerm_subnet" "app_gateway" {
 
 }
 
-resource "azurerm_subnet" "app_gateway" {
+resource "azurerm_subnet" "workload" {
 
   name                 = "snet-workload"
   resource_group_name  = azurerm_resource_group.main.name
