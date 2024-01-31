@@ -26,6 +26,13 @@ resource "azurerm_subnet" "dns" {
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [cidrsubnet(var.address_space, 5, 1)]
 
+  delegation {
+    name = "Microsoft.Network.dnsResolvers"
+    service_delegation {
+      name = "Microsoft.Network.dnsResolvers"
+    }
+  }
+
 }
 
 # minimum subnet size of /26
