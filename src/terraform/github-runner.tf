@@ -1,3 +1,9 @@
+resource "azurerm_key_vault_secret" "github_token" {
+  name         = "github-token"
+  value        = var.github_token
+  key_vault_id = azurerm_key_vault.main.id
+}
+
 /*
 resource "azapi_resource" "github_custom_runner" {
   type      = "Microsoft.App/jobs@2023-05-01"
