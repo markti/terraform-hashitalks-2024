@@ -29,7 +29,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "acr" {
 }
 
 resource "azurerm_private_endpoint" "acr" {
-  name                = azurerm_container_registry.main.name
+  name                = "pep-${azurerm_container_registry.main.name}"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   subnet_id           = azurerm_subnet.shared.id
