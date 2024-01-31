@@ -1,3 +1,13 @@
+# Enterprise Application used to grant access to Azure VPN
+# In order to use this, you need to authenticate Terraform with sufficient credentials to create enterprise applications
+resource "azuread_application" "vpn" {
+
+  count = var.vpn_application_id == null ? 1 : 0
+
+  display_name = "${var.application_name}-${var.environment_name}-${random_string.main.result}-vpn"
+
+}
+
 resource "azurerm_public_ip" "vpn" {
   name                = "pip-vgw-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   location            = azurerm_resource_group.main.location
@@ -38,10 +48,18 @@ resource "azurerm_virtual_network_gateway" "main" {
   }
 }
 
-resource "azuread_application" "vpn" {
+module "vpn_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
 
-  count = var.vpn_application_id == null ? 1 : 0
-
-  display_name = "${var.application_name}-${var.environment_name}-${random_string.main.result}-vpn"
+  resource_id                = azurerm_virtual_network_gateway.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  logs = [
+    "GatewayDiagnosticLog",
+    "TunnelDiagnosticLog",
+    "RouteDiagnosticLog",
+    "IKEDiagnosticLog",
+    "P2SDiagnosticLog"
+  ]
 
 }
