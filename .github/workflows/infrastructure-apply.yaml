@@ -1,4 +1,4 @@
-name: Infrastructure-Plan
+name: Infrastructure-Apply
 
 on:
   workflow_dispatch:
