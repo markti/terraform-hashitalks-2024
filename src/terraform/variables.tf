@@ -16,6 +16,12 @@ variable "vpn_address_space" {
 variable "vpn_application_id" {
   type = string
 }
+variable "admin_groups" {
+  type = list(string)
+}
+variable "node_size" {
+  type = string
+}
 variable "github_runner_network" {
   type = object({
     resource_group_name  = string
