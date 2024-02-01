@@ -1,5 +1,5 @@
 ACR=craztflabdevagyhy3jv.azurecr.io
-IMAGE=health-check
+IMAGE=user-svc
 TAG=v2024.01.1
 
 set -e
