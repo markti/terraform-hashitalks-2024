@@ -8,7 +8,7 @@ resource "azurerm_key_vault" "main" {
   public_network_access_enabled = false
   purge_protection_enabled      = false
 }
-
+/*
 
 resource "azurerm_key_vault_secret" "sauce" {
   name         = "secret-sauce"
@@ -16,7 +16,7 @@ resource "azurerm_key_vault_secret" "sauce" {
   key_vault_id = azurerm_key_vault.main.id
 
   depends_on = [azurerm_virtual_network_peering.a-to-b, azurerm_virtual_network_peering.b-to-a]
-}
+}*/
 
 resource "azurerm_role_assignment" "terraform_keyvault_access" {
   scope                = azurerm_key_vault.main.id
