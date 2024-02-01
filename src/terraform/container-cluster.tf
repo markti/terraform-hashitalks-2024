@@ -30,6 +30,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   role_based_access_control_enabled = true
   local_account_disabled            = true
   dns_prefix                        = "${var.application_name}-${var.environment_name}"
+  node_resource_group               = "aks-${var.application_name}-${var.environment_name}-${random_string.main.result}-nodes"
 
   identity {
     type         = "UserAssigned"
