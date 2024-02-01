@@ -1,4 +1,4 @@
-name: ${module_name}
+name: Infrastructure-Plan
 
 on:
   workflow_dispatch:
