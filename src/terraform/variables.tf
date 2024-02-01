@@ -16,6 +16,9 @@ variable "vpn_address_space" {
 variable "vpn_application_id" {
   type = string
 }
-variable "github_token" {
-  type = string
+variable "github_runner_network" {
+  type = object({
+    resource_group_name  = string
+    virtual_network_name = string
+  })
 }
