@@ -25,7 +25,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
-  sku_tier                          = "Standard"
+  sku_tier                          = "standard"
   kubernetes_version                = "1.27.7"
   role_based_access_control_enabled = true
   local_account_disabled            = true
