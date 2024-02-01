@@ -49,7 +49,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     vm_size             = var.node_size
     enable_auto_scaling = false
     os_sku              = "Mariner"
-    pod_subnet_id       = azurerm_subnet.workload.id
+    vnet_subnet_id      = azurerm_subnet.workload.id
     type                = "VirtualMachineScaleSets"
     zones               = [1, 2, 3]
   }
