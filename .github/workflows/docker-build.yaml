@@ -1,0 +1,96 @@
+name: Docker-Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+
+env:
+  DOCKER_IMAGE_NAME: "github-runner"
+  DOCKER_WORKING_DIRECTORY: "./src/dotnet/healthcheck"
+  TERRAFORM_VERSION: '1.5.7'
+
+jobs:
+  terraform:
+    runs-on: self-hosted
+
+    outputs:
+      registry_endpoint: ${{ steps.apply.outputs.registry_endpoint }}
+
+    environment:
+      name: ${{ github.event.inputs.environment }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - id: setup
+      name: Setup `terraform`
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+    - id: apply
+      name: Terraform Output
+      env:
+        ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+        ARM_CLIENT_ID: ${{ vars.TERRAFORM_ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_ARM_CLIENT_SECRET }}
+        TF_VAR_application_name: ${{ vars.APPLICATION_NAME }}
+        TF_VAR_environment_name: ${{ vars.ENVIRONMENT_NAME }}
+        TF_VAR_github_token: ${{ secrets.TERRAFORM_GITHUB_TOKEN }}
+      working-directory: ${{ vars.TERRAFORM_WORKING_DIRECTORY }}
+      run: |
+        terraform init \
+          -backend-config="resource_group_name=${{ vars.BACKEND_RESOURCE_GROUP_NAME }}" \
+          -backend-config="storage_account_name=${{ vars.BACKEND_STORAGE_ACCOUNT_NAME }}" \
+          -backend-config="container_name=${{ vars.BACKEND_STORAGE_CONTAINER_NAME }}" \
+          -backend-config="key=${{ vars.APPLICATION_NAME }}-${{ vars.ENVIRONMENT_NAME }}"
+
+        terraform apply -refresh-only -auto-approve
+
+        registry_endpoint=$(terraform output -raw registry_endpoint)
+        echo $registry_endpoint
+        echo "registry_endpoint=$registry_endpoint" >> "$GITHUB_OUTPUT"
+
+  docker:
+    needs: [terraform]
+    runs-on: self-hosted
+
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - id: image-version
+      name: Generate Version Number
+      run: |
+        echo "version=$(date +'%Y.%m').${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+    - name: Show Registry
+      run: |
+        echo "ACR:${{ needs.terraform.outputs.registry_endpoint }}"
+        echo "Version:${{ steps.image-version.outputs.version }}"
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to Azure Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ needs.terraform.outputs.registry_endpoint }}
+        username: ${{ vars.TERRAFORM_ARM_CLIENT_ID }}
+        password: ${{ secrets.TERRAFORM_ARM_CLIENT_SECRET }}
+
+    - name: Build and push Docker image to ACR
+      uses: docker/build-push-action@v5
+      with:
+        context: ${{ env.DOCKER_WORKING_DIRECTORY }}
+        push: true
+        tags: ${{ needs.terraform.outputs.registry_endpoint }}/${{ env.DOCKER_IMAGE_NAME }}:${{ steps.image-version.outputs.version }}
