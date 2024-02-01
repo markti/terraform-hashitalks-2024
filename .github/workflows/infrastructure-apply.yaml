@@ -12,7 +12,7 @@ jobs:
 
   terraform:
     name: Run Terraform Plan
-    uses: ./.github/workflows/terraform-plan.yaml
+    uses: ./.github/workflows/terraform-apply.yaml
     with:
       working_directory: ./src/terraform/infra
       environment: ${{ github.event.inputs.environment }}

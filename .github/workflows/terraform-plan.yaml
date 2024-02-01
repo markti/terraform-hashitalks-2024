@@ -24,7 +24,7 @@ on:
 
 jobs:
 
-  terraform-plan:
+  plan:
     runs-on: self-hosted
 
     environment:
