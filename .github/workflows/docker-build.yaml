@@ -9,7 +9,7 @@ on:
         required: true
 
 env:
-  DOCKER_IMAGE_NAME: "github-runner"
+  DOCKER_IMAGE_NAME: "health-check"
   DOCKER_WORKING_DIRECTORY: "./src/dotnet/healthcheck"
   TERRAFORM_VERSION: '1.5.7'
 
