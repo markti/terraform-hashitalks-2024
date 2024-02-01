@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "aks_outbound_ip" {
-  name                = "pip-aks-out-${var.application_name}-${var.environment_name}-${random_string.main.result}"
+  name                = "pip-aks-${var.application_name}-${var.environment_name}-${random_string.main.result}-outbound"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   sku                 = "Standard"
