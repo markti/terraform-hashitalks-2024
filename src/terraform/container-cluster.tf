@@ -25,7 +25,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
-  sku_tier                          = "standard"
+  sku_tier                          = "Standard"
   kubernetes_version                = "1.27.7"
   role_based_access_control_enabled = true
   local_account_disabled            = true
@@ -59,7 +59,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   network_profile {
     network_plugin    = "azure"
-    load_balancer_sku = "Standard"
+    load_balancer_sku = "standard"
     service_cidr      = "10.32.0.0/16"
     dns_service_ip    = "10.32.0.10"
     load_balancer_profile {
