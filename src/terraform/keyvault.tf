@@ -9,6 +9,13 @@ resource "azurerm_key_vault" "main" {
   purge_protection_enabled      = false
 }
 
+
+resource "azurerm_key_vault_secret" "sauce" {
+  name         = "secret-sauce"
+  value        = "szechuan"
+  key_vault_id = azurerm_key_vault.main.id
+}
+
 resource "azurerm_role_assignment" "terraform_keyvault_access" {
   scope                = azurerm_key_vault.main.id
   role_definition_name = "Key Vault Administrator"
