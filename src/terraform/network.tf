@@ -37,15 +37,17 @@ locals {
 }
 
 resource "azurerm_virtual_network_peering" "a-to-b" {
-  name                      = "peer1to2"
+  name                      = "workload-to-github-runner"
   resource_group_name       = local.alpha.rg
   virtual_network_name      = local.alpha.name
   remote_virtual_network_id = local.beta.id
+  allow_forwarded_traffic   = true
 }
 
 resource "azurerm_virtual_network_peering" "b-to-a" {
-  name                      = "peer2to1"
+  name                      = "github-runner-to-workload"
   resource_group_name       = local.beta.rg
   virtual_network_name      = local.beta.name
   remote_virtual_network_id = local.alpha.id
+  allow_forwarded_traffic   = true
 }
