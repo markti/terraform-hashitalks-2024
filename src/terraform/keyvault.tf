@@ -7,12 +7,6 @@ resource "azurerm_key_vault" "main" {
   enable_rbac_authorization     = true
   public_network_access_enabled = false
   purge_protection_enabled      = false
-
-  network_acls {
-    bypass         = "AzureServices"
-    default_action = "Deny"
-  }
-
 }
 
 resource "azurerm_key_vault_secret" "sauce" {
