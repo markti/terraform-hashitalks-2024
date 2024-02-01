@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "aks_outbound_ip" {
-  name                = "pip-aks-${var.application_name}-${var.environment_name}-${random_string.example.result}"
+  name                = "pip-aks-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   sku                 = "Standard"
@@ -11,7 +11,7 @@ resource "azurerm_public_ip" "aks_outbound_ip" {
 resource "azurerm_user_assigned_identity" "aks_cluster" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  name                = "mi-aks-${var.application_name}-${var.environment_name}-${random_string.example.result}"
+  name                = "mi-aks-${var.application_name}-${var.environment_name}-${random_string.main.result}"
 }
 
 resource "azurerm_role_assignment" "network_contributor" {
@@ -21,7 +21,7 @@ resource "azurerm_role_assignment" "network_contributor" {
 }
 
 resource "azurerm_kubernetes_cluster" "main" {
-  name                = "aks-${var.application_name}-${var.environment_name}-${random_string.example.result}"
+  name                = "aks-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
