@@ -29,7 +29,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   kubernetes_version                = "1.27.7"
   role_based_access_control_enabled = true
   local_account_disabled            = true
-  dns_prefix                        = "exampleaks1"
+  dns_prefix                        = "${var.application_name}-${var.environment_name}"
 
   identity {
     type         = "UserAssigned"
