@@ -7,8 +7,15 @@ resource "azurerm_key_vault" "main" {
   enable_rbac_authorization     = true
   public_network_access_enabled = false
   purge_protection_enabled      = false
+
+  network_acls {
+    bypass         = "AzureServices"
+    default_action = "Deny"
+  }
+
 }
 
+/*
 resource "azurerm_key_vault_secret" "sauce" {
   name         = "secret-sauce"
   value        = "szechuan"
@@ -16,6 +23,7 @@ resource "azurerm_key_vault_secret" "sauce" {
 
   depends_on = [azurerm_virtual_network_peering.a-to-b, azurerm_virtual_network_peering.b-to-a]
 }
+*/
 
 resource "azurerm_role_assignment" "terraform_keyvault_access" {
   scope                = azurerm_key_vault.main.id
