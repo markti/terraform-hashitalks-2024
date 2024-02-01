@@ -23,17 +23,29 @@ data "azurerm_virtual_network" "github_runner" {
   resource_group_name = var.github_runner_network.resource_group_name
 }
 
-/*
-resource "azurerm_virtual_network_peering" "example-1" {
-  name                      = "peer1to2"
-  resource_group_name       = azurerm_resource_group.example.name
-  virtual_network_name      = azurerm_virtual_network.example-1.name
-  remote_virtual_network_id = azurerm_virtual_network.example-2.id
+locals {
+  alpha = {
+    rg   = azurerm_resource_group.main.name
+    name = azurerm_virtual_network.main.name
+    id   = azurerm_virtual_network.main.id
+  }
+  beta = {
+    rg   = data.azurerm_virtual_network.github_runner.resource_group_name
+    name = data.azurerm_virtual_network.github_runner.name
+    id   = data.azurerm_virtual_network.github_runner.id
+  }
 }
 
-resource "azurerm_virtual_network_peering" "example-2" {
+resource "azurerm_virtual_network_peering" "a-to-b" {
+  name                      = "peer1to2"
+  resource_group_name       = local.alpha.rg
+  virtual_network_name      = local.alpha.name
+  remote_virtual_network_id = local.beta.id
+}
+
+resource "azurerm_virtual_network_peering" "b-to-a" {
   name                      = "peer2to1"
-  resource_group_name       = azurerm_resource_group.example.name
-  virtual_network_name      = azurerm_virtual_network.example-2.name
-  remote_virtual_network_id = azurerm_virtual_network.example-1.id
-}*/
+  resource_group_name       = local.beta.rg
+  virtual_network_name      = local.beta.name
+  remote_virtual_network_id = local.alpha.id
+}
