@@ -19,7 +19,7 @@ resource "azurerm_public_ip" "vpn" {
 
 }
 
-module "aks_outbound_pip_monitor_diagnostic" {
+module "vpn_pip_monitor_diagnostic" {
   source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
   version = "1.0.10"
 
