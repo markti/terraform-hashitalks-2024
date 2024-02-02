@@ -28,7 +28,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   sku_tier                          = "Standard"
   kubernetes_version                = "1.27.7"
   role_based_access_control_enabled = true
-  local_account_disabled            = true
+  local_account_disabled            = false
   dns_prefix                        = "${var.application_name}-${var.environment_name}"
   node_resource_group               = "rg-${var.application_name}-${var.environment_name}-${random_string.main.result}-nodes"
 
