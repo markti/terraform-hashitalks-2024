@@ -8,3 +8,7 @@ My awesome codebase
     </dnsservers>
 </clientconfig>
   ```
+
+```
+az aks get-credentials --name aks-aztflab-dev-agyhy3jv --resource-group rg-aztflab-dev-agyhy3jv
+```

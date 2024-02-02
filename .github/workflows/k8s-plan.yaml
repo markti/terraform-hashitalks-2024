@@ -86,8 +86,6 @@ jobs:
         TF_VAR_kubernetes_cluster_name: ${{ needs.infra.outputs.kubernetes_cluster_name }}
       working-directory: ./src/terraform/k8s
       run: |
-
-        pwd
         terraform init \
           -backend-config="resource_group_name=${{ vars.BACKEND_RESOURCE_GROUP_NAME }}" \
           -backend-config="storage_account_name=${{ vars.BACKEND_STORAGE_ACCOUNT_NAME }}" \
