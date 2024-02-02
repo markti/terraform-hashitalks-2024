@@ -11,3 +11,6 @@ output "resource_group_name" {
 output "kubernetes_cluster_name" {
   value = azurerm_kubernetes_cluster.main.name
 }
+output "workload_managed_identity_id" {
+  value = azurerm_user_assigned_identity.workload.principal_id
+}

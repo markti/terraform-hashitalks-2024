@@ -57,6 +57,9 @@ jobs:
         kubernetes_cluster_name=$(terraform output -raw kubernetes_cluster_name)
         echo "kubernetes_cluster_name=$kubernetes_cluster_name" >> "$GITHUB_OUTPUT"
 
+        workload_managed_identity_id=$(terraform output -raw workload_managed_identity_id)
+        echo "workload_managed_identity_id=$workload_managed_identity_id" >> "$GITHUB_OUTPUT"
+        
   k8s:
     runs-on: self-hosted
     needs: infra

@@ -2,9 +2,9 @@ resource "kubernetes_namespace" "app" {
   metadata {
 
     labels = {
-      name = "app"
+      name = var.k8s_namespace
     }
 
-    name = "app"
+    name = var.k8s_namespace
   }
 }
