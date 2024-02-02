@@ -1,0 +1,29 @@
+name: k8s-Plan
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+
+jobs:
+
+  infra:
+    name: Infrastructure
+    uses: ./.github/workflows/terraform-apply.yaml
+    with:
+      working_directory: ./src/terraform/infra
+      environment: ${{ github.event.inputs.environment }}
+    secrets: inherit
+
+  k8s:
+    name: Kubernetes
+    uses: ./.github/workflows/terraform-apply.yaml
+    needs: infra
+    with:
+      working_directory: ./src/terraform/k8s
+      environment: ${{ github.event.inputs.environment }}
+      suffix: '-k8s'
+    secrets: inherit
