@@ -76,3 +76,25 @@ resource "azurerm_kubernetes_cluster" "main" {
     secret_rotation_interval = "2m"
   }
 }
+
+module "aks_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
+
+  resource_id                = azurerm_kubernetes_cluster.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  logs = [
+    "kube-apiserver",
+    "kube-audit",
+    "kube-audit-admin",
+    "kube-controller-manager",
+    "kube-scheduler",
+    "cluster-autoscaler",
+    "cloud-controller-manager",
+    "guard",
+    "csi-azuredisk-controller",
+    "csi-azurefile-controller",
+    "csi-snapshot-controller"
+  ]
+
+}
