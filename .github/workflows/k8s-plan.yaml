@@ -21,6 +21,7 @@ jobs:
       kubernetes_cluster_name: ${{ steps.apply.outputs.kubernetes_cluster_name }}
       workload_managed_identity_id: ${{ steps.apply.outputs.workload_managed_identity_id }}
       keyvault_name: ${{ steps.apply.outputs.keyvault_name }}
+      container_registry: ${{ steps.apply.outputs.container_registry }}
 
     environment:
       name: ${{ inputs.environment }}
@@ -59,6 +60,9 @@ jobs:
         kubernetes_cluster_name=$(terraform output -raw kubernetes_cluster_name)
         echo "kubernetes_cluster_name=$kubernetes_cluster_name" >> "$GITHUB_OUTPUT"
 
+        container_registry=$(terraform output -raw container_registry)
+        echo "container_registry=$container_registry" >> "$GITHUB_OUTPUT"
+
         workload_managed_identity_id=$(terraform output -raw workload_managed_identity_id)
         echo "workload_managed_identity_id=$workload_managed_identity_id" >> "$GITHUB_OUTPUT"
 
@@ -92,6 +96,9 @@ jobs:
         TF_VAR_environment_name: ${{ vars.ENVIRONMENT_NAME }}
         TF_VAR_resource_group_name: ${{ needs.infra.outputs.resource_group_name }}
         TF_VAR_kubernetes_cluster_name: ${{ needs.infra.outputs.kubernetes_cluster_name }}
+        TF_VAR_container_registry: ${{ needs.infra.outputs.container_registry }}
+        TF_VAR_workload_managed_identity_id: ${{ needs.infra.outputs.workload_managed_identity_id }}
+        TF_VAR_keyvault_name: ${{ needs.infra.outputs.keyvault_name }}
       working-directory: ./src/terraform/k8s
       run: |
         terraform init \
