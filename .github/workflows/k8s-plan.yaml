@@ -21,6 +21,7 @@ jobs:
   k8s:
     name: Terraform
     uses: ./.github/workflows/terraform-plan.yaml
+    needs: infra
     with:
       working_directory: ./src/terraform/k8s
       environment: ${{ github.event.inputs.environment }}
