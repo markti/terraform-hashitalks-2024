@@ -19,6 +19,8 @@ jobs:
     outputs:
       resource_group_name: ${{ steps.apply.outputs.resource_group_name }}
       kubernetes_cluster_name: ${{ steps.apply.outputs.kubernetes_cluster_name }}
+      workload_managed_identity_id: ${{ steps.apply.outputs.workload_managed_identity_id }}
+      keyvault_name: ${{ steps.apply.outputs.keyvault_name }}
 
     environment:
       name: ${{ inputs.environment }}
@@ -59,6 +61,9 @@ jobs:
 
         workload_managed_identity_id=$(terraform output -raw workload_managed_identity_id)
         echo "workload_managed_identity_id=$workload_managed_identity_id" >> "$GITHUB_OUTPUT"
+
+        keyvault_name=$(terraform output -raw keyvault_name)
+        echo "keyvault_name=$keyvault_name" >> "$GITHUB_OUTPUT"
         
   k8s:
     runs-on: self-hosted

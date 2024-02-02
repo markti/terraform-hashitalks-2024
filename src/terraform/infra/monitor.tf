@@ -13,3 +13,9 @@ resource "azurerm_application_insights" "main" {
   workspace_id        = azurerm_log_analytics_workspace.main.id
   application_type    = "web"
 }
+
+resource "azurerm_key_vault_secret" "app_insights_instrumentation_key" {
+  key_vault_id = azurerm_key_vault.main.id
+  name         = "app-insights-connection-string"
+  value        = azurerm_application_insights.main.instrumentation_key
+}
