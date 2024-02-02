@@ -10,5 +10,5 @@ resource "azurerm_federated_identity_credential" "workload" {
   audience            = []
   issuer              = azurerm_kubernetes_cluster.main.oidc_issuer_url
   parent_id           = azurerm_user_assigned_identity.workload.id
-  subject             = "system:serviceaccount:${var.k8s_namespace}:${k8s_service_account_name}"
+  subject             = "system:serviceaccount:${var.k8s_namespace}:${var.k8s_service_account_name}"
 }
