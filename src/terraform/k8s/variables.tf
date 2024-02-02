@@ -4,6 +4,3 @@ variable "application_name" {
 variable "environment_name" {
   type = string
 }
-variable "host" {
-  type = string
-}
