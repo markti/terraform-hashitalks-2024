@@ -69,3 +69,12 @@ resource "azurerm_private_endpoint" "keyvault" {
     private_dns_zone_ids = [azurerm_private_dns_zone.keyvault.id]
   }
 }
+
+module "kv_pep_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
+
+  resource_id                = azurerm_private_endpoint.keyvault.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+}
