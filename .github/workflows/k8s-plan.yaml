@@ -16,6 +16,10 @@ jobs:
   infra:
     runs-on: self-hosted
 
+    outputs:
+      resource_group_name: ${{ steps.apply.outputs.resource_group_name }}
+      kubernetes_cluster_name: ${{ steps.apply.outputs.kubernetes_cluster_name }}
+
     environment:
       name: ${{ inputs.environment }}
 
@@ -47,6 +51,12 @@ jobs:
           
         terraform apply -auto-approve
 
+        resource_group_name=$(terraform output -raw resource_group_name)
+        echo "resource_group_name=$resource_group_name" >> "$GITHUB_OUTPUT"
+
+        kubernetes_cluster_name=$(terraform output -raw kubernetes_cluster_name)
+        echo "kubernetes_cluster_name=$kubernetes_cluster_name" >> "$GITHUB_OUTPUT"
+
   k8s:
     runs-on: self-hosted
     needs: infra
@@ -72,6 +82,8 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_ARM_CLIENT_SECRET }}
         TF_VAR_application_name: ${{ vars.APPLICATION_NAME }}
         TF_VAR_environment_name: ${{ vars.ENVIRONMENT_NAME }}
+        TF_VAR_resource_group_name: ${{ needs.infra.outputs.resource_group_name }}
+        TF_VAR_kubernetes_cluster_name: ${{ needs.infra.outputs.kubernetes_cluster_name }}
       working-directory: ./src/terraform/k8s
       run: |
 

@@ -22,8 +22,8 @@ provider "azurerm" {
 }
 
 data "azurerm_kubernetes_cluster" "main" {
-  name                = "aks-aztflab-dev-agyhy3jv"
-  resource_group_name = "rg-aztflab-dev-agyhy3jv"
+  name                = var.kubernetes_cluster_name
+  resource_group_name = var.resource_group_name
 }
 
 provider "kubernetes" {
