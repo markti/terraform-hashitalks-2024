@@ -1,4 +1,4 @@
-name: Infrastructure-Apply
+name: k8s-Plan
 
 on:
   workflow_dispatch:
