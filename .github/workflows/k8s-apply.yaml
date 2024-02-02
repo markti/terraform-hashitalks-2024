@@ -1,4 +1,4 @@
-name: k8s-Plan
+name: k8s-Apply
 
 on:
   workflow_dispatch:
