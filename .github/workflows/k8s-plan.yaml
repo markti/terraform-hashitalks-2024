@@ -49,6 +49,7 @@ jobs:
 
   k8s:
     runs-on: self-hosted
+    needs: infra
 
     environment:
       name: ${{ inputs.environment }}
