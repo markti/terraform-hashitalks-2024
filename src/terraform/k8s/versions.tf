@@ -9,6 +9,8 @@ terraform {
       version = "~> 2.25.0"
     }
   }
+  backend "azurerm" {
+  }
 }
 
 data "azurerm_kubernetes_cluster" "main" {
