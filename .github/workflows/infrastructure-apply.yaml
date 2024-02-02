@@ -11,7 +11,7 @@ on:
 jobs:
 
   terraform:
-    name: Run Terraform Plan
+    name: Terraform
     uses: ./.github/workflows/terraform-apply.yaml
     with:
       working_directory: ./src/terraform/infra
