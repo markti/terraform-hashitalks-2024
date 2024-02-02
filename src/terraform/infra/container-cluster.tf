@@ -8,6 +8,20 @@ resource "azurerm_public_ip" "aks_outbound_ip" {
   ip_version          = "IPv4"
 }
 
+module "aks_outbound_pip_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
+
+  resource_id                = azurerm_public_ip.aks_outbound_ip.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  logs = [
+    "DDoSProtectionNotifications",
+    "DDoSMitigationFlowLogs",
+    "DDoSMitigationReports"
+  ]
+
+}
+
 resource "azurerm_user_assigned_identity" "aks_cluster" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
