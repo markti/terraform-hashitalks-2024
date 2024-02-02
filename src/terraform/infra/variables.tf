@@ -28,3 +28,9 @@ variable "github_runner_network" {
     virtual_network_name = string
   })
 }
+variable "k8s_namespace" {
+  type = string
+}
+variable "k8s_service_account_name" {
+  type = string  
+}
