@@ -11,7 +11,7 @@ on:
 jobs:
 
   infra:
-    name: Terraform
+    name: Infrastructure
     uses: ./.github/workflows/terraform-apply.yaml
     with:
       working_directory: ./src/terraform/infra
@@ -19,7 +19,7 @@ jobs:
     secrets: inherit
 
   k8s:
-    name: Terraform
+    name: Kubernetes
     uses: ./.github/workflows/terraform-plan.yaml
     needs: infra
     with:
