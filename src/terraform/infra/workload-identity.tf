@@ -7,7 +7,7 @@ resource "azurerm_user_assigned_identity" "workload" {
 resource "azurerm_federated_identity_credential" "workload" {
   name                = azurerm_user_assigned_identity.workload.name
   resource_group_name = azurerm_resource_group.main.name
-  audience            = []
+  audience            = ["api://AzureADTokenExchange"]
   issuer              = azurerm_kubernetes_cluster.main.oidc_issuer_url
   parent_id           = azurerm_user_assigned_identity.workload.id
   subject             = "system:serviceaccount:${var.k8s_namespace}:${var.k8s_service_account_name}"
