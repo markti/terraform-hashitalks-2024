@@ -73,8 +73,8 @@ jobs:
       with:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-    - id: plan
-      name: Terraform Plan
+    - id: apply
+      name: Terraform Apply
       env:
         ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
