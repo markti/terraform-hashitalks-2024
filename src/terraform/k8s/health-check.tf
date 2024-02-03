@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "health_check" {
+/*resource "kubernetes_deployment" "health_check" {
   metadata {
     name      = "health-check"
     namespace = kubernetes_namespace.app.metadata.0.name
@@ -167,3 +167,4 @@ resource "kubernetes_config_map" "health_check" {
     "my_payload.bin" = "${filebase64("${path.module}/my_payload.bin")}"
   }
 }
+*/
