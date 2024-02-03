@@ -7,5 +7,5 @@ health_check_image = {
 }
 user_svc_image = {
   name    = "user-svc"
-  version = "v2024.01.1"
+  version = "v2024.02.1"
 }
