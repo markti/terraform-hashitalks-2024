@@ -24,6 +24,17 @@ resource "azurerm_cosmosdb_account" "main" {
 
 }
 
+resource "azurerm_cosmosdb_sql_database" "user_svc" {
+  name                = "user-svc"
+  resource_group_name = data.azurerm_cosmosdb_account.main.resource_group_name
+  account_name        = data.azurerm_cosmosdb_account.main.name
+
+  autoscale_settings {
+    max_throughput = 1000
+  }
+
+}
+
 resource "azurerm_role_assignment" "workload_identity_cosmos_reader" {
   scope                = azurerm_cosmosdb_account.main.id
   role_definition_name = "DocumentDB Account Contributor"

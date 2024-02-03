@@ -160,7 +160,8 @@ resource "kubernetes_config_map" "user_svc" {
   }
 
   data = {
-    HELLO_WORLD = "Azure Terraformer"
+    HELLO_WORLD         = "Azure Terraformer"
+    "CosmosDb:Endpoint" = var.cosmos_endpoint
   }
 
 }
