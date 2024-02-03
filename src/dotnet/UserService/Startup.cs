@@ -39,12 +39,12 @@ namespace UserApi
             //}
             app.UseSwagger(c =>
             {
-                c.RouteTemplate = "api/HealthCheck/swagger/{documentName}/swagger.json";
+                c.RouteTemplate = "api/User/swagger/{documentName}/swagger.json";
             });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/api/HealthCheck/swagger/v1/swagger.json", "Order API V1");
-                c.RoutePrefix = "api/HealthCheck/swagger";
+                c.SwaggerEndpoint("/api/User/swagger/v1/swagger.json", "Order API V1");
+                c.RoutePrefix = "api/User/swagger";
             });
 
             using var serviceScope = app.Services.CreateScope();
@@ -74,11 +74,11 @@ namespace UserApi
             app.MapControllers();
 
             app.UseEndpoints(endpoints => {
-                endpoints.MapGet("/api/HealthCheck/healthz/live", async context =>
+                endpoints.MapGet("/api/User/healthz/live", async context =>
                 {
                     await context.Response.WriteAsync("Healthy");
                 });
-                endpoints.MapHealthChecks("/api/HealthCheck/healthz/ready", new HealthCheckOptions
+                endpoints.MapHealthChecks("/api/User/healthz/ready", new HealthCheckOptions
                 {
                     Predicate = _ => true
                 });
