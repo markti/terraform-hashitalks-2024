@@ -70,10 +70,6 @@ resource "azurerm_private_endpoint" "keyvault" {
   }
 }
 
-#network_interface
-
-
-
 module "keyvault_pep_monitor_diagnostic" {
   source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
   version = "1.0.10"
