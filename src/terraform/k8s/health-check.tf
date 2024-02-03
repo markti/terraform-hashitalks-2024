@@ -1,4 +1,4 @@
-/*resource "kubernetes_deployment" "health_check" {
+resource "kubernetes_deployment" "health_check" {
   metadata {
     name      = "health-check"
     namespace = kubernetes_namespace.app.metadata.0.name
@@ -25,7 +25,7 @@
         service_account_name = "workload"
 
         node_selector = {
-          agentpool = "user"
+          agentpool = "npworkload"
         }
 
         container {
@@ -53,7 +53,7 @@
 
           liveness_probe {
             http_get {
-              path = "/api/Health/healthz/live"
+              path = "/api/HealthCheck/healthz/live"
               port = 80
             }
             initial_delay_seconds = 5
@@ -62,7 +62,7 @@
 
           readiness_probe {
             http_get {
-              path = "/api/Health/healthz/ready"
+              path = "/api/HealthCheck/healthz/ready"
               port = 80
             }
             initial_delay_seconds = 5
@@ -135,7 +135,7 @@ resource "kubernetes_ingress_v1" "health_check" {
     rule {
       http {
         path {
-          path      = "/api/Health"
+          path      = "/api/HealthCheck"
           path_type = "Prefix"
 
           backend {
@@ -154,17 +154,12 @@ resource "kubernetes_ingress_v1" "health_check" {
 
 resource "kubernetes_config_map" "health_check" {
   metadata {
-    name = "my-config"
+    name      = "health-check-config"
+    namespace = kubernetes_namespace.app.metadata.0.name
   }
 
   data = {
-    api_host             = "myhost:443"
-    db_host              = "dbhost:5432"
-    "my_config_file.yml" = "${file("${path.module}/my_config_file.yml")}"
+    HELLO_WORLD = "Azure Terraformer"
   }
 
-  binary_data = {
-    "my_payload.bin" = "${filebase64("${path.module}/my_payload.bin")}"
-  }
 }
-*/

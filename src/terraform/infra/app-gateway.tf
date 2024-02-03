@@ -78,7 +78,7 @@ resource "azurerm_application_gateway" "main" {
 
     path_rule {
       name                       = "health-check"
-      paths                      = ["/api/Health/*"]
+      paths                      = ["/api/HealthCheck/*"]
       backend_address_pool_name  = "myBackendPool"
       backend_http_settings_name = "healthCheckSettings"
     }
@@ -104,7 +104,7 @@ resource "azurerm_application_gateway" "main" {
     name                                      = "healthCheck"
     protocol                                  = "Http"
     host                                      = "127.0.0.1"
-    path                                      = "/api/Health/healthz/ready"
+    path                                      = "/api/HealthCheck/healthz/ready"
     interval                                  = 30
     timeout                                   = 30
     unhealthy_threshold                       = 3
