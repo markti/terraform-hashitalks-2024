@@ -19,17 +19,11 @@ variable "vpn_application_id" {
 variable "admin_groups" {
   type = list(string)
 }
-variable "node_size" {
-  type = string
-}
-variable "node_count" {
-  type = number
-}
 variable "aks_configuration" {
   type = object({
     system_pool = object({
-      sku        = string
-      node_count = number
+      sku      = string
+      capacity = number
     })
     workload_pool = object({
       sku = string
