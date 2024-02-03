@@ -14,5 +14,5 @@ output "keyvault_name" {
   value = azurerm_key_vault.main.name
 }
 output "backend_ip_address" {
-  value = cidrhost(cidrsubnet(var.address_space, 2, 3), 250)
+  value = cidrhost(azurerm_subnet.workload.address_prefixes[0], 250)
 }
