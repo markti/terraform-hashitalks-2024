@@ -3,7 +3,7 @@ resource "azurerm_cosmosdb_account" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   offer_type          = "Standard"
-  kind                = "GlobalDocumentDb"
+  kind                = "GlobalDocumentDB"
 
   enable_automatic_failover = true
 
