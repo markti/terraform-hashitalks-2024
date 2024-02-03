@@ -1,4 +1,4 @@
-/*
+
 resource "kubernetes_deployment" "health_check" {
   metadata {
     name      = "health-check"
@@ -164,4 +164,3 @@ resource "kubernetes_config_map" "health_check" {
   }
 
 }
-*/
