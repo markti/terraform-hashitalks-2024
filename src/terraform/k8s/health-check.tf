@@ -80,7 +80,7 @@ resource "kubernetes_deployment" "health_check" {
             name = "APPLICATIONINSIGHTS_CONNECTION_STRING"
             value_from {
               secret_key_ref {
-                name = kubernetes_manifest.shared_secrets.spec.secretObjects.0.secretName
+                name = kubernetes_manifest.shared_secrets.manifest.spec.secretObjects.0.secretName
                 key  = "app-insights-connection-string"
               }
             }
@@ -97,7 +97,7 @@ resource "kubernetes_deployment" "health_check" {
             read_only = true
 
             volume_attributes = {
-              secretProviderClass = kubernetes_manifest.shared_secrets.metadata.0.name
+              secretProviderClass = kubernetes_manifest.shared_secrets.manifest.metadata.0.name
             }
           }
         }
