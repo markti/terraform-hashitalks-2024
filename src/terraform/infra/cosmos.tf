@@ -23,3 +23,9 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 
 }
+
+resource "azurerm_role_assignment" "workload_identity_cosmos_reader" {
+  scope                = azurerm_cosmosdb_account.main.id
+  role_definition_name = "DocumentDB Account Contributor"
+  principal_id         = azurerm_user_assigned_identity.workload.principal_id
+}
