@@ -13,7 +13,7 @@ output "workload_managed_identity_id" {
 output "keyvault_name" {
   value = azurerm_key_vault.main.name
 }
-output "azurerm_cosmosdb_account" {
+output "cosmos_endpoint" {
   value = azurerm_cosmosdb_account.main.endpoint
 }
 output "backend_ip_address" {
