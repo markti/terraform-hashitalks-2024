@@ -81,6 +81,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
+  microsoft_defender {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  }
+
   oms_agent {
     log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   }
