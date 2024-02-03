@@ -34,7 +34,8 @@ resource "azurerm_cosmosdb_sql_role_definition" "reader" {
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
   name                = "CosmosDB Reader"
-  assignable_scopes   = ["/"]
+  assignable_scopes   = [azurerm_cosmosdb_account.main.id]
+  type                = "CustomRole"
 
   permissions {
     data_actions = [
@@ -50,7 +51,8 @@ resource "azurerm_cosmosdb_sql_role_definition" "writer" {
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
   name                = "CosmosDB Writer"
-  assignable_scopes   = ["/"]
+  assignable_scopes   = [azurerm_cosmosdb_account.main.id]
+  type                = "CustomRole"
 
   permissions {
     data_actions = [
