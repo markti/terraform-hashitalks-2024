@@ -28,11 +28,7 @@ resource "azurerm_cosmosdb_sql_database" "user_svc" {
   name                = "user-svc"
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
-
-  autoscale_settings {
-    max_throughput = 1000
-  }
-
+  throughput          = 400
 }
 
 resource "azurerm_role_assignment" "workload_identity_cosmos_reader" {
