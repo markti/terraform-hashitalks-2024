@@ -25,3 +25,15 @@ variable "k8s_namespace" {
 variable "k8s_service_account_name" {
   type = string
 }
+variable "health_check_image" {
+  type = object({
+    name    = string
+    version = string
+  })
+}
+variable "user_svc_image" {
+  type = object({
+    name    = string
+    version = string
+  })
+}

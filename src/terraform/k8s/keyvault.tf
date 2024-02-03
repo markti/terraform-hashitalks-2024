@@ -1,9 +1,9 @@
-resource "kubernetes_manifest" "user_secrets" {
+resource "kubernetes_manifest" "shared_secrets" {
   manifest = {
     apiVersion = "secrets-store.csi.x-k8s.io/v1"
     kind       = "SecretProviderClass"
     metadata = {
-      name      = "user-secrets"
+      name      = "shared-secrets"
       namespace = "app"
     }
     spec = {
@@ -16,7 +16,7 @@ resource "kubernetes_manifest" "user_secrets" {
               objectName = "app-insights-connection-string"
             }
           ]
-          secretName = "user"
+          secretName = "shared"
           type       = "Opaque"
         }
       ]
