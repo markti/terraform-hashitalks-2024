@@ -22,6 +22,16 @@ variable "admin_groups" {
 variable "node_size" {
   type = string
 }
+variable "app_gateway_configuration" {
+  type = object({
+    sku = string
+    capacity = object({
+      ready = number
+      min = number
+      max = number
+    })
+  })
+}
 variable "github_runner_network" {
   type = object({
     resource_group_name  = string
@@ -32,5 +42,5 @@ variable "k8s_namespace" {
   type = string
 }
 variable "k8s_service_account_name" {
-  type = string  
+  type = string
 }
