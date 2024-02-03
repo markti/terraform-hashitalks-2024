@@ -17,7 +17,7 @@ public class HealthCheckController : ControllerBase
     [HttpGet(Name = "GetHealth")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dictionary<int, int>))]
-    public async Task<IActionResult> GetAsync(string userId)
+    public async Task<IActionResult> GetAsync()
     {
         try
         {
