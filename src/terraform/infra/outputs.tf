@@ -16,6 +16,9 @@ output "keyvault_name" {
 output "cosmos_endpoint" {
   value = azurerm_cosmosdb_account.main.endpoint
 }
+output "user_svc_database" {
+  value = azurerm_cosmosdb_sql_database.user_svc.name
+}
 output "backend_ip_address" {
   value = local.backend_ip_address
 }
