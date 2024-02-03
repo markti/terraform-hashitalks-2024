@@ -80,10 +80,5 @@ module "keyvault_pep_monitor_diagnostic" {
 
   resource_id                = azurerm_private_endpoint.keyvault.network_interface.0.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
-  logs = [
-    "DDoSProtectionNotifications",
-    "DDoSMitigationFlowLogs",
-    "DDoSMitigationReports"
-  ]
 
 }
