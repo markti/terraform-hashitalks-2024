@@ -52,7 +52,7 @@ jobs:
           -backend-config="container_name=${{ vars.BACKEND_STORAGE_CONTAINER_NAME }}" \
           -backend-config="key=${{ vars.APPLICATION_NAME }}-${{ vars.ENVIRONMENT_NAME }}"
           
-        terraform apply -auto-approve
+        terraform apply -refresh-only -auto-approve
 
         resource_group_name=$(terraform output -raw resource_group_name)
         echo "resource_group_name=$resource_group_name" >> "$GITHUB_OUTPUT"
