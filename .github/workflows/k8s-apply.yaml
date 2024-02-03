@@ -23,6 +23,7 @@ jobs:
       workload_managed_identity_id: ${{ steps.apply.outputs.workload_managed_identity_id }}
       keyvault_name: ${{ steps.apply.outputs.keyvault_name }}
       cosmos_endpoint: ${{ steps.apply.outputs.cosmos_endpoint }}
+      user_svc_database: ${{ steps.apply.outputs.user_svc_database }}
       backend_ip_address: ${{ steps.apply.outputs.backend_ip_address }}
       backend_nodepool: ${{ steps.apply.outputs.backend_nodepool }}
 
@@ -75,6 +76,9 @@ jobs:
         cosmos_endpoint=$(terraform output -raw cosmos_endpoint)
         echo "cosmos_endpoint=$cosmos_endpoint" >> "$GITHUB_OUTPUT"
 
+        user_svc_database=$(terraform output -raw user_svc_database)
+        echo "user_svc_database=$user_svc_database" >> "$GITHUB_OUTPUT"
+
         backend_ip_address=$(terraform output -raw backend_ip_address)
         echo "backend_ip_address=$backend_ip_address" >> "$GITHUB_OUTPUT"
 
@@ -112,6 +116,7 @@ jobs:
         TF_VAR_workload_managed_identity_id: ${{ needs.infra.outputs.workload_managed_identity_id }}
         TF_VAR_keyvault_name: ${{ needs.infra.outputs.keyvault_name }}
         TF_VAR_cosmos_endpoint: ${{ needs.infra.outputs.cosmos_endpoint }}
+        TF_VAR_user_svc_database: ${{ needs.infra.outputs.user_svc_database }}
         TF_VAR_backend_ip_address: ${{ needs.infra.outputs.backend_ip_address }}
         TF_VAR_backend_nodepool: ${{ needs.infra.outputs.backend_nodepool }}
       working-directory: ./src/terraform/k8s
