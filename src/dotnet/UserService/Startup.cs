@@ -1,6 +1,9 @@
 ﻿using UserApi.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Diagnostics;
+using UserApi.Services;
+using Microsoft.Azure.Cosmos;
+using Azure.Identity;
 
 namespace UserApi
 {
@@ -27,8 +30,31 @@ namespace UserApi
 
             services.AddApplicationInsightsTelemetry();
 
+            
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+
             services.AddHealthChecks()
-                .AddCheck<DoNothingHealthCheck>("nada");
+                .AddCheck<DoNothingHealthCheck>("nada")
+                .AddCheck<CosmosDbHealthCheck>("cosmos");
+        }
+
+        private void AddCosmosDb(IServiceCollection services)
+        {
+            var endpoint = Configuration["CosmosDb:Endpoint"];
+            var databaseName = Configuration["CosmosDb:Database"];
+            services.AddSingleton<CosmosClient>((serviceProvider) =>
+            {
+                var clientOptions = new CosmosClientOptions();
+                var credential = new DefaultAzureCredential();
+                var cosmosClient = new CosmosClient(endpoint, credential, clientOptions);
+                return cosmosClient;
+            });
+            services.AddSingleton((serviceProvider) =>
+            {
+                var cosmosClient = serviceProvider.GetRequiredService<CosmosClient>();
+                var cosmosDatabase = cosmosClient.GetDatabase(databaseName);
+                return cosmosDatabase;
+            });
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment env)
