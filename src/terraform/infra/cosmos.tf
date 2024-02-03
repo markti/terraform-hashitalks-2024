@@ -26,8 +26,8 @@ resource "azurerm_cosmosdb_account" "main" {
 
 resource "azurerm_cosmosdb_sql_database" "user_svc" {
   name                = "user-svc"
-  resource_group_name = data.azurerm_cosmosdb_account.main.resource_group_name
-  account_name        = data.azurerm_cosmosdb_account.main.name
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
 
   autoscale_settings {
     max_throughput = 1000
