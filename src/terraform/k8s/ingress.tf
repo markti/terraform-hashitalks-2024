@@ -15,6 +15,7 @@ resource "helm_release" "ingress_nginx" {
   chart      = "ingress-nginx"
   version    = "4.9.0"
   namespace  = kubernetes_namespace.ingress_nginx.metadata.0.name
+  timeout    = 600
 
   set {
     name  = "controller.replicaCount"
