@@ -34,7 +34,7 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name  = "controller.image.registry"
-    value = var.container_registry
+    value = "mcr.microsoft.com"
   }
 
   set {
@@ -84,7 +84,7 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name  = "controller.admissionWebhooks.patch.image.registry"
-    value = var.container_registry
+    value = "mcr.microsoft.com"
   }
 
   set {
