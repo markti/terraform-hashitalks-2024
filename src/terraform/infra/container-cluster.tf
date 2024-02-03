@@ -59,7 +59,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   default_node_pool {
     name                = "npsystem"
-    node_count          = var.aks_configuration.system_pool.node_count
+    node_count          = var.aks_configuration.system_pool.capacity
     vm_size             = var.aks_configuration.system_pool.sku
     enable_auto_scaling = false
     os_sku              = "Mariner"

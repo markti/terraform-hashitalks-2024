@@ -6,8 +6,8 @@ admin_groups       = ["3a8bf720-3ae5-45a3-8122-0eea50497c73"]
 
 aks_configuration = {
   system_pool = {
-    sku       = "Standard_D4s_v3"
-    node_size = 3
+    sku      = "Standard_D4s_v3"
+    capacity = 3
   }
   workload_pool = {
     sku = "Standard_D4s_v3"
