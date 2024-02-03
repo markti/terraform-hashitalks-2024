@@ -69,3 +69,21 @@ resource "azurerm_private_endpoint" "keyvault" {
     private_dns_zone_ids = [azurerm_private_dns_zone.keyvault.id]
   }
 }
+
+#network_interface
+
+
+
+module "keyvault_pep_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
+
+  resource_id                = azurerm_private_endpoint.keyvault.network_interface.0.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  logs = [
+    "DDoSProtectionNotifications",
+    "DDoSMitigationFlowLogs",
+    "DDoSMitigationReports"
+  ]
+
+}
