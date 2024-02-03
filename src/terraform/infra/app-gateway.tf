@@ -65,12 +65,11 @@ resource "azurerm_application_gateway" "main" {
   }
 
   backend_http_settings {
-    name                  = "healthCheck"
+    name                  = "healthCheckSettings"
     port                  = 80
     protocol              = "Http"
     cookie_based_affinity = "Disabled"
     request_timeout       = 20
-    path                  = "/path1/"
   }
 
   url_path_map {
