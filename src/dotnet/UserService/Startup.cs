@@ -30,7 +30,7 @@ namespace UserApi
 
             services.AddApplicationInsightsTelemetry();
 
-            
+            AddCosmosDb(services);
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
             services.AddHealthChecks()
