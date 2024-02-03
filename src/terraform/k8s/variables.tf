@@ -1,23 +1,30 @@
 variable "application_name" {
-  type = string
+  type        = string
+  description = "Provided by pipeline"
 }
 variable "environment_name" {
-  type = string
+  type        = string
+  description = "Provided by pipeline"
 }
 variable "resource_group_name" {
-  type = string
+  type        = string
+  description = "Provided by pipeline"
 }
 variable "kubernetes_cluster_name" {
-  type = string
-}
-variable "workload_managed_identity_id" {
-  type = string
-}
-variable "keyvault_name" {
-  type = string
+  type        = string
+  description = "Provided by pipeline"
 }
 variable "container_registry" {
-  type = string
+  type        = string
+  description = "Provided by pipeline"
+}
+variable "workload_managed_identity_id" {
+  type        = string
+  description = "Provided by pipeline"
+}
+variable "keyvault_name" {
+  type        = string
+  description = "Provided by pipeline"
 }
 variable "k8s_namespace" {
   type = string
