@@ -5,6 +5,16 @@ resource "azurerm_cdn_frontdoor_profile" "main" {
   response_timeout_seconds = 90
 }
 
+module "frontdoor_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
+
+  resource_id                = azurerm_key_vault.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  logs                       = ["FrontDoorAccessLog", "FrontDoorHealthProbeLog", "FrontDoorWebApplicationFirewallLog"]
+
+}
+
 resource "azurerm_cdn_frontdoor_endpoint" "main" {
   name                     = "fde-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main.id
