@@ -39,5 +39,5 @@ module "appi_monitor_diagnostic" {
 resource "azurerm_key_vault_secret" "app_insights_instrumentation_key" {
   key_vault_id = azurerm_key_vault.main.id
   name         = "app-insights-connection-string"
-  value        = azurerm_application_insights.main.instrumentation_key
+  value        = azurerm_application_insights.main.connection_string
 }
