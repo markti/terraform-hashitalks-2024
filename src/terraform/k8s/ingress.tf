@@ -9,6 +9,19 @@ resource "kubernetes_namespace" "ingress_nginx" {
   }
 }
 
+locals {
+  controller_image = {
+    registry = "mcr.microsoft.com"
+    name     = "oss/kubernetes/ingress/nginx-ingress-controller"
+    version  = "v1.9.5"
+  }
+  patch_image = {
+    registry = "mcr.microsoft.com"
+    name     = "oss/kubernetes/ingress/kube-webhook-certgen"
+    version  = "v1.9.5"
+  }
+}
+
 resource "helm_release" "ingress_nginx" {
   name       = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
@@ -29,22 +42,22 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name  = "controller.nodeSelector.agentpool"
-    value = "npworkload"
+    value = var.backend_nodepool
   }
 
   set {
     name  = "controller.image.registry"
-    value = "mcr.microsoft.com"
+    value = local.controller_image.registry
   }
 
   set {
     name  = "controller.image.image"
-    value = "oss/kubernetes/ingress/nginx-ingress-controller"
+    value = local.controller_image.name
   }
 
   set {
     name  = "controller.image.tag"
-    value = "v1.9.5"
+    value = local.controller_image.version
   }
 
   set {
@@ -59,7 +72,7 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name  = "controller.admissionWebhooks.patch.nodeSelector.agentpool"
-    value = "npworkload"
+    value = var.backend_nodepool
   }
 
   set {
@@ -69,7 +82,7 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-ipv4"
-    value = "10.0.3.250"
+    value = var.backend_ip_address
   }
 
   set {
@@ -84,17 +97,17 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name  = "controller.admissionWebhooks.patch.image.registry"
-    value = "mcr.microsoft.com"
+    value = local.patch_image.registry
   }
 
   set {
     name  = "controller.admissionWebhooks.patch.image.image"
-    value = "oss/kubernetes/ingress/kube-webhook-certgen"
+    value = local.patch_image.name
   }
 
   set {
     name  = "controller.admissionWebhooks.patch.image.tag"
-    value = "v1.9.5"
+    value = local.patch_image.version
   }
 
   set {

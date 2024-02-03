@@ -26,6 +26,14 @@ variable "keyvault_name" {
   type        = string
   description = "Provided by pipeline"
 }
+variable "backend_ip_address" {
+  type        = string
+  description = "Provided by pipeline"
+}
+variable "backend_nodepool" {
+  type        = string
+  description = "Provided by pipeline"
+}
 variable "k8s_namespace" {
   type = string
 }

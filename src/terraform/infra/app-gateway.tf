@@ -25,6 +25,10 @@ module "agw_pip_monitor_diagnostic" {
 
 }
 
+locals {
+  backend_ip_address = cidrhost(azurerm_subnet.workload.address_prefixes[0], 250)
+}
+
 resource "azurerm_application_gateway" "main" {
   name                = "agw-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   resource_group_name = azurerm_resource_group.main.name
@@ -60,7 +64,7 @@ resource "azurerm_application_gateway" "main" {
 
   backend_address_pool {
     name         = "myBackendPool"
-    ip_addresses = ["10.0.3.250"]
+    ip_addresses = [local.backend_ip_address]
   }
 
   backend_http_settings {

@@ -22,6 +22,8 @@ jobs:
       workload_managed_identity_id: ${{ steps.apply.outputs.workload_managed_identity_id }}
       keyvault_name: ${{ steps.apply.outputs.keyvault_name }}
       container_registry: ${{ steps.apply.outputs.container_registry }}
+      backend_ip_address: ${{ steps.apply.outputs.backend_ip_address }}
+      backend_nodepool: ${{ steps.apply.outputs.backend_nodepool }}
 
     environment:
       name: ${{ inputs.environment }}
@@ -68,6 +70,12 @@ jobs:
 
         keyvault_name=$(terraform output -raw keyvault_name)
         echo "keyvault_name=$keyvault_name" >> "$GITHUB_OUTPUT"
+
+        backend_ip_address=$(terraform output -raw backend_ip_address)
+        echo "backend_ip_address=$backend_ip_address" >> "$GITHUB_OUTPUT"
+
+        backend_nodepool=$(terraform output -raw backend_nodepool)
+        echo "backend_nodepool=$backend_nodepool" >> "$GITHUB_OUTPUT"
         
   k8s:
     runs-on: self-hosted
@@ -99,6 +107,8 @@ jobs:
         TF_VAR_container_registry: ${{ needs.infra.outputs.container_registry }}
         TF_VAR_workload_managed_identity_id: ${{ needs.infra.outputs.workload_managed_identity_id }}
         TF_VAR_keyvault_name: ${{ needs.infra.outputs.keyvault_name }}
+        TF_VAR_backend_ip_address: ${{ needs.infra.outputs.backend_ip_address }}
+        TF_VAR_backend_nodepool: ${{ needs.infra.outputs.backend_nodepool }}
       working-directory: ./src/terraform/k8s
       run: |
         terraform init \

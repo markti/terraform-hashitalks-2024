@@ -14,5 +14,8 @@ output "keyvault_name" {
   value = azurerm_key_vault.main.name
 }
 output "backend_ip_address" {
-  value = cidrhost(azurerm_subnet.workload.address_prefixes[0], 250)
+  value = local.backend_ip_address
+}
+output "backend_nodepool" {
+  value = azurerm_kubernetes_cluster_node_pool.workload.name
 }

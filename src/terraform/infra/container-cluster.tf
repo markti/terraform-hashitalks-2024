@@ -113,7 +113,7 @@ module "aks_monitor_diagnostic" {
 
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "user" {
+resource "azurerm_kubernetes_cluster_node_pool" "workload" {
 
   name                  = "npworkload"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
