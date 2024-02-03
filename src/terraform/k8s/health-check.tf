@@ -97,7 +97,7 @@ resource "kubernetes_deployment" "health_check" {
             read_only = true
 
             volume_attributes = {
-              secretProviderClass = kubernetes_manifest.shared_secrets.manifest.metadata.0.name
+              secretProviderClass = kubernetes_manifest.shared_secrets.manifest.metadata.name
             }
           }
         }
