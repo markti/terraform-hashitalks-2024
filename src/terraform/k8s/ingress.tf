@@ -1,9 +1,20 @@
+resource "kubernetes_namespace" "ingress_nginx" {
+  metadata {
+
+    labels = {
+      name = "ingress-controller"
+    }
+
+    name = "ingress-controller"
+  }
+}
+
 resource "helm_release" "ingress_nginx" {
   name       = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
   version    = "4.9.0"
-  namespace  = "ingress-controller"
+  namespace  = kubernetes_namespace.ingress_nginx.metadata.0.name
 
   set {
     name  = "controller.replicaCount"
