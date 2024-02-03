@@ -23,9 +23,3 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 
 }
-
-resource "azurerm_role_assignment" "workload_identity_cosmos_reader" {
-  scope                = azurerm_key_vault.main.id
-  role_definition_name = "Cosmos DB Account Reader"
-  principal_id         = azurerm_user_assigned_identity.workload.principal_id
-}
