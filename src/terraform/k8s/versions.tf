@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.25.0"
     }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.12.1"
+    }
   }
   backend "azurerm" {
   }
@@ -34,4 +38,13 @@ provider "kubernetes" {
   client_key             = base64decode(data.azurerm_kubernetes_cluster.main.kube_admin_config[0].client_key)
   client_certificate     = base64decode(data.azurerm_kubernetes_cluster.main.kube_admin_config[0].client_certificate)
   cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.main.kube_admin_config[0].cluster_ca_certificate)
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = data.azurerm_kubernetes_cluster.main.kube_admin_config[0].host
+    client_key             = base64decode(data.azurerm_kubernetes_cluster.main.kube_admin_config[0].client_key)
+    client_certificate     = base64decode(data.azurerm_kubernetes_cluster.main.kube_admin_config[0].client_certificate)
+    cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.main.kube_admin_config[0].cluster_ca_certificate)
+  }
 }
