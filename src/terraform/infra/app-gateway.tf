@@ -31,9 +31,8 @@ resource "azurerm_application_gateway" "main" {
   location            = azurerm_resource_group.main.location
 
   sku {
-    name     = var.app_gateway_configuration.sku
-    tier     = var.app_gateway_configuration.sku
-    capacity = var.app_gateway_configuration.capacity.ready
+    name = var.app_gateway_configuration.sku
+    tier = var.app_gateway_configuration.sku
   }
   zones        = [1, 2, 3]
   enable_http2 = false
