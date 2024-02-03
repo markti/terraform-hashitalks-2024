@@ -62,7 +62,7 @@ resource "azurerm_cosmosdb_sql_role_definition" "writer" {
 }
 
 resource "azurerm_cosmosdb_sql_role_assignment" "workload_identity" {
-  name                = azurerm_user_assigned_identity.workload.name
+  name                = azurerm_user_assigned_identity.workload.principal_id
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
 
