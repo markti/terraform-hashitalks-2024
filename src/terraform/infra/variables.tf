@@ -22,13 +22,32 @@ variable "admin_groups" {
 variable "node_size" {
   type = string
 }
+variable "node_count" {
+  type = number
+}
+variable "aks_configuration" {
+  type = object({
+    system_pool = object({
+      sku        = string
+      node_count = number
+    })
+    workload_pool = object({
+      sku = string
+      capacity = object({
+        ready = number
+        min   = number
+        max   = number
+      })
+    })
+  })
+}
 variable "app_gateway_configuration" {
   type = object({
     sku = string
     capacity = object({
       ready = number
-      min = number
-      max = number
+      min   = number
+      max   = number
     })
   })
 }

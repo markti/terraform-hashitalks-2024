@@ -59,8 +59,8 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   default_node_pool {
     name                = "npsystem"
-    node_count          = 3
-    vm_size             = var.node_size
+    node_count          = var.aks_configuration.system_pool.node_count
+    vm_size             = var.aks_configuration.system_pool.sku
     enable_auto_scaling = false
     os_sku              = "Mariner"
     vnet_subnet_id      = azurerm_subnet.workload.id
@@ -110,5 +110,20 @@ module "aks_monitor_diagnostic" {
     "csi-azurefile-controller",
     "csi-snapshot-controller"
   ]
+
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "user" {
+
+  name                  = "npworkload"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  vm_size               = var.aks_configuration.workload_pool.sku
+  enable_auto_scaling   = true
+  os_sku                = "Mariner"
+  vnet_subnet_id        = azurerm_subnet.workload.id
+  zones                 = [1, 2, 3]
+  node_count            = var.aks_configuration.workload_pool.capacity.ready
+  min_count             = var.aks_configuration.workload_pool.capacity.min
+  max_count             = var.aks_configuration.workload_pool.capacity.max
 
 }
