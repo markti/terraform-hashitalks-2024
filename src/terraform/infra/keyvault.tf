@@ -23,6 +23,12 @@ resource "azurerm_role_assignment" "terraform_keyvault_access" {
   principal_id         = data.azurerm_client_config.current.object_id
 }
 
+resource "azurerm_role_assignment" "workload_identity" {
+  scope                = azurerm_key_vault.main.id
+  role_definition_name = "Key Vault Administrator"
+  principal_id         = azurerm_user_assigned_identity.workload.principal_id
+}
+
 module "keyvault_monitor_diagnostic" {
   source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
   version = "1.0.10"
