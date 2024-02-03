@@ -14,6 +14,28 @@ resource "azurerm_application_insights" "main" {
   application_type    = "web"
 }
 
+module "appi_monitor_diagnostic" {
+  source  = "markti/azure-terraformer/azurerm//modules/monitor/diagnostic-setting/rando"
+  version = "1.0.10"
+
+  resource_id                = azurerm_application_insights.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+  logs = [
+    "AppAvailabilityResults",
+    "AppBrowserTimings",
+    "AppEvents",
+    "AppMetrics",
+    "AppDependencies",
+    "AppExceptions",
+    "AppPageViews",
+    "AppPerformanceCounters",
+    "AppRequests",
+    "AppSystemEvents",
+    "AppTraces"
+  ]
+
+}
+
 resource "azurerm_key_vault_secret" "app_insights_instrumentation_key" {
   key_vault_id = azurerm_key_vault.main.id
   name         = "app-insights-connection-string"
