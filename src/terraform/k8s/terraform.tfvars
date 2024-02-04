@@ -3,7 +3,7 @@ k8s_service_account_name = "workload"
 
 health_check_image = {
   name    = "health-check"
-  version = "v2024.02.1"
+  version = "v2024.02.2"
 }
 user_svc_image = {
   name    = "user-svc"
