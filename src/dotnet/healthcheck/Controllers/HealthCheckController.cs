@@ -12,6 +12,7 @@ public class HealthCheckController : ControllerBase
     private readonly HttpClient _httpClient;
 
     private const string USER_SVC_ENDPOINT = "http://user-svc.app.svc.cluster.local/api/User/healthz/ready";
+    private const string TENANT_SVC_ENDPOINT = "http://tenance-svc.app.svc.cluster.local/api/Tenant/healthz/ready";
 
     public HealthCheckController(ILogger<HealthCheckController> logger, HttpClient httpClient)
     {
@@ -36,7 +37,18 @@ public class HealthCheckController : ControllerBase
             {
                 _logger.LogInformation("User Service FAILED");
             }
-            var allOk = userResponse.IsSuccessStatusCode && true;
+
+            var tenantResponse = await _httpClient.GetAsync(TENANT_SVC_ENDPOINT);
+            if (tenantResponse.IsSuccessStatusCode)
+            {
+                _logger.LogInformation("Tenant Service OK");
+            } 
+            else
+            {
+                _logger.LogInformation("Tenant Service FAILED");
+            }
+
+            var allOk = userResponse.IsSuccessStatusCode && tenantResponse.IsSuccessStatusCode;
             if(allOk)
             {
                 return Ok();
