@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 using System.Net.Mime;
 
 namespace HealthCheck.Controllers;
@@ -8,10 +9,14 @@ namespace HealthCheck.Controllers;
 public class HealthCheckController : ControllerBase
 {
     private readonly ILogger<HealthCheckController> _logger;
+    private readonly HttpClient _httpClient;
 
-    public HealthCheckController(ILogger<HealthCheckController> logger)
+    private const string USER_SVC_ENDPOINT = "http://user-svc.app.svc.cluster.local/api/User/healthz/ready";
+
+    public HealthCheckController(ILogger<HealthCheckController> logger, HttpClient httpClient)
     {
         _logger = logger;
+        _httpClient = httpClient;
     }
 
     [HttpGet(Name = "GetHealth")]
@@ -21,8 +26,25 @@ public class HealthCheckController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("OK");
-            return Ok();
+            var userResponse = await _httpClient.GetAsync(USER_SVC_ENDPOINT);
+
+            if (userResponse.IsSuccessStatusCode)
+            {
+                _logger.LogInformation("User Service OK");
+            } 
+            else
+            {
+                _logger.LogInformation("User Service FAILED");
+            }
+            var allOk = userResponse.IsSuccessStatusCode && true;
+            if(allOk)
+            {
+                return Ok();
+            } 
+            else 
+            {
+                return Problem("Health Check Failed");
+            }
         }
         catch (Exception ex)
         {
