@@ -64,3 +64,9 @@ variable "user_svc_image" {
     version = string
   })
 }
+variable "tenant_svc_image" {
+  type = object({
+    name    = string
+    version = string
+  })
+}

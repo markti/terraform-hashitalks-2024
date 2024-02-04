@@ -34,8 +34,7 @@ namespace UserApi
             services.AddScoped<ITenantRepository, TenantRepository>();
 
             services.AddHealthChecks()
-                .AddCheck<DoNothingHealthCheck>("nada")
-                .AddCheck<CosmosDbHealthCheck>("cosmos");
+                .AddCheck<DoNothingHealthCheck>("nada");
         }
 
         private void AddCosmosDb(IServiceCollection services)

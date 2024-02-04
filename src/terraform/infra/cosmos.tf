@@ -30,12 +30,15 @@ resource "azurerm_cosmosdb_sql_database" "user_svc" {
   account_name        = azurerm_cosmosdb_account.main.name
   throughput          = 400
 }
+
+/*
 resource "azurerm_cosmosdb_sql_database" "tenant_svc" {
   name                = "tenant-svc"
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
   throughput          = 400
 }
+*/
 
 resource "azurerm_role_assignment" "workload_identity_cosmos_reader" {
   scope                = azurerm_cosmosdb_account.main.id

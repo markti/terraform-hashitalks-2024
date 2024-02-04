@@ -1,6 +1,6 @@
 ACR=craztflabdevagyhy3jv.azurecr.io
 IMAGE=tenant-svc
-TAG=v2024.02.1
+TAG=v2024.02.2
 
 set -e
 az acr login --name $ACR
