@@ -73,6 +73,7 @@ resource "azurerm_application_gateway" "main" {
     protocol              = "Http"
     cookie_based_affinity = "Disabled"
     request_timeout       = 20
+    probe_name            = "healthCheck"
   }
 
   url_path_map {
