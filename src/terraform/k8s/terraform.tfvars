@@ -7,7 +7,7 @@ health_check_image = {
 }
 user_svc_image = {
   name    = "user-svc"
-  version = "v2024.02.2"
+  version = "v2024.02.3"
 }
 tenant_svc_image = {
   name    = "tenant-svc"
