@@ -1,6 +1,6 @@
 ACR=craztflabdevagyhy3jv.azurecr.io
 IMAGE=health-check
-TAG=v2024.02.3
+TAG=v2024.02.4
 
 set -e
 az acr login --name $ACR
