@@ -25,7 +25,7 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 
 }
-/*
+
 resource "azurerm_cosmosdb_sql_database" "user_svc" {
   name                = "user-svc"
   resource_group_name = azurerm_resource_group.main.name
@@ -33,7 +33,7 @@ resource "azurerm_cosmosdb_sql_database" "user_svc" {
   throughput          = 400
 }
 
-
+/*
 resource "azurerm_cosmosdb_sql_database" "tenant_svc" {
   name                = "tenant-svc"
   resource_group_name = azurerm_resource_group.main.name
