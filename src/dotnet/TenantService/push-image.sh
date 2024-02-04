@@ -1,5 +1,5 @@
 ACR=craztflabdevagyhy3jv.azurecr.io
-IMAGE=user-svc
+IMAGE=tenant-svc
 TAG=v2024.02.1
 
 set -e

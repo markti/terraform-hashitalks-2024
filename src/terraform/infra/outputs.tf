@@ -19,6 +19,9 @@ output "cosmos_endpoint" {
 output "user_svc_database" {
   value = azurerm_cosmosdb_sql_database.user_svc.name
 }
+output "tenant_svc_database" {
+  value = azurerm_cosmosdb_sql_database.tenant_svc.name
+}
 output "backend_ip_address" {
   value = local.backend_ip_address
 }

@@ -34,6 +34,10 @@ variable "user_svc_database" {
   type        = string
   description = "Provided by pipeline"
 }
+variable "tenant_svc_database" {
+  type        = string
+  description = "Provided by pipeline"
+}
 variable "backend_ip_address" {
   type        = string
   description = "Provided by pipeline"
