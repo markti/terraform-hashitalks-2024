@@ -27,6 +27,8 @@ namespace HealthCheck
 
             services.AddApplicationInsightsTelemetry();
 
+            services.AddHttpClient();
+
             services.AddHealthChecks()
                 .AddCheck<DoNothingHealthCheck>("nada");
         }
