@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
-using UserApi.Models;
+using TenantApi.Models;
 
-namespace UserApi.Services
+namespace TenantApi.Services
 {
     public class TenantRepository : ITenantRepository
     {

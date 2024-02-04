@@ -1,9 +1,9 @@
-﻿using UserApi.Infrastructure;
+﻿using Azure.Identity;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using System.Diagnostics;
-using UserApi.Services;
 using Microsoft.Azure.Cosmos;
-using Azure.Identity;
+using System.Diagnostics;
+using TenantApi.Infrastructure;
+using TenantApi.Services;
 
 namespace UserApi
 {
@@ -31,7 +31,7 @@ namespace UserApi
             services.AddApplicationInsightsTelemetry();
 
             
-            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<ITenantRepository, TenantRepository>();
 
             services.AddHealthChecks()
                 .AddCheck<DoNothingHealthCheck>("nada")
@@ -65,12 +65,12 @@ namespace UserApi
             //}
             app.UseSwagger(c =>
             {
-                c.RouteTemplate = "api/User/swagger/{documentName}/swagger.json";
+                c.RouteTemplate = "api/Tenant/swagger/{documentName}/swagger.json";
             });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/api/User/swagger/v1/swagger.json", "Order API V1");
-                c.RoutePrefix = "api/User/swagger";
+                c.SwaggerEndpoint("/api/Tenant/swagger/v1/swagger.json", "Tenant API V1");
+                c.RoutePrefix = "api/Tenant/swagger";
             });
 
             using var serviceScope = app.Services.CreateScope();
@@ -100,11 +100,11 @@ namespace UserApi
             app.MapControllers();
 
             app.UseEndpoints(endpoints => {
-                endpoints.MapGet("/api/User/healthz/live", async context =>
+                endpoints.MapGet("/api/Tenant/healthz/live", async context =>
                 {
                     await context.Response.WriteAsync("Healthy");
                 });
-                endpoints.MapHealthChecks("/api/User/healthz/ready", new HealthCheckOptions
+                endpoints.MapHealthChecks("/api/Tenant/healthz/ready", new HealthCheckOptions
                 {
                     Predicate = _ => true
                 });

@@ -32,10 +32,10 @@ public class TenantController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "GetUser")]
+    [HttpGet(Name = "GetTenant")]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAsync(string userId)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TenantProfile))]
+    public async Task<IActionResult> GetAsync(Guid id)
     {
         try
         {
@@ -49,10 +49,10 @@ public class TenantController : ControllerBase
         }
     }
 
-    [HttpPatch(Name = "UpdateUser")]
+    [HttpPatch(Name = "UpdateTenant")]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> UpdateAsync(UserProfile userProfile)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TenantProfile))]
+    public async Task<IActionResult> UpdateAsync(Guid id, string name)
     {
         try
         {
@@ -66,7 +66,7 @@ public class TenantController : ControllerBase
         }
     }
 
-    [HttpPatch(Name = "DeleteUser")]
+    [HttpPatch(Name = "DeleteTenant")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteAsync(Guid tenantId, Guid userId)
