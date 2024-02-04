@@ -27,6 +27,13 @@ module "agw_pip_monitor_diagnostic" {
 
 locals {
   backend_ip_address = cidrhost(azurerm_subnet.workload.address_prefixes[0], 250)
+
+  backend_address_pool_name      = "myBackendPool"
+  frontend_ip_configuration_name = "appGwPublicFrontendIp"
+  backend_http_settings_name     = "healthCheckSettings"
+  probe_name                     = "healthCheck"
+  url_path_map_name              = "httpRule"
+  http_listener_name             = "httpListener"
 }
 
 resource "azurerm_application_gateway" "main" {
@@ -57,56 +64,56 @@ resource "azurerm_application_gateway" "main" {
   }
 
   frontend_ip_configuration {
-    name                          = "appGwPublicFrontendIp"
+    name                          = local.frontend_ip_configuration_name
     public_ip_address_id          = azurerm_public_ip.app_gateway.id
     private_ip_address_allocation = "Dynamic"
   }
 
   backend_address_pool {
-    name         = "myBackendPool"
+    name         = local.backend_address_pool_name
     ip_addresses = [local.backend_ip_address]
   }
 
   backend_http_settings {
-    name                  = "healthCheckSettings"
+    name                  = local.backend_http_settings_name
     port                  = 80
     protocol              = "Http"
     cookie_based_affinity = "Disabled"
     request_timeout       = 20
-    probe_name            = "healthCheck"
+    probe_name            = local.probe_name
   }
 
   url_path_map {
-    name                               = "httpRule"
-    default_backend_address_pool_name  = "myBackendPool"
-    default_backend_http_settings_name = "healthCheckSettings"
+    name                               = local.url_path_map_name
+    default_backend_address_pool_name  = local.backend_address_pool_name
+    default_backend_http_settings_name = local.backend_http_settings_name
 
     path_rule {
       name                       = "health-check"
       paths                      = ["/api/HealthCheck/*"]
-      backend_address_pool_name  = "myBackendPool"
-      backend_http_settings_name = "healthCheckSettings"
+      backend_address_pool_name  = local.backend_address_pool_name
+      backend_http_settings_name = local.backend_http_settings_name
     }
   }
 
   http_listener {
-    name                           = "httpListener"
-    frontend_ip_configuration_name = "appGwPublicFrontendIp"
+    name                           = local.http_listener_name
+    frontend_ip_configuration_name = local.frontend_ip_configuration_name
     frontend_port_name             = "port_80"
     protocol                       = "Http"
     require_sni                    = false
   }
 
   request_routing_rule {
-    name               = "httpRule"
+    name               = local.url_path_map_name
     priority           = 1
     rule_type          = "PathBasedRouting"
-    http_listener_name = "httpListener"
-    url_path_map_name  = "httpRule"
+    http_listener_name = local.http_listener_name
+    url_path_map_name  = local.url_path_map_name
   }
 
   probe {
-    name                                      = "healthCheck"
+    name                                      = local.probe_name
     protocol                                  = "Http"
     host                                      = "127.0.0.1"
     path                                      = "/api/HealthCheck/healthz/ready"
