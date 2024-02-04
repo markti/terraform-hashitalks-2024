@@ -11,5 +11,5 @@ user_svc_image = {
 }
 tenant_svc_image = {
   name    = "tenant-svc"
-  version = "v2024.02.2"
+  version = "v2024.02.3"
 }
