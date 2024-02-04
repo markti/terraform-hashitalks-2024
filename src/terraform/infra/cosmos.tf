@@ -5,7 +5,7 @@ resource "azurerm_cosmosdb_account" "main" {
   offer_type                            = "Standard"
   kind                                  = "GlobalDocumentDB"
   enable_automatic_failover             = true
-  public_network_access_enabled         = true
+  public_network_access_enabled         = false
   network_acl_bypass_for_azure_services = true
 
   consistency_policy {
