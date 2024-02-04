@@ -1,11 +1,12 @@
 resource "azurerm_cosmosdb_account" "main" {
-  name                = "cosmos-${var.application_name}-${var.environment_name}-${random_string.main.result}"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  offer_type          = "Standard"
-  kind                = "GlobalDocumentDB"
-
-  enable_automatic_failover = true
+  name                                  = "cosmos-${var.application_name}-${var.environment_name}-${random_string.main.result}"
+  location                              = azurerm_resource_group.main.location
+  resource_group_name                   = azurerm_resource_group.main.name
+  offer_type                            = "Standard"
+  kind                                  = "GlobalDocumentDB"
+  enable_automatic_failover             = true
+  public_network_access_enabled         = false
+  network_acl_bypass_for_azure_services = true
 
   consistency_policy {
     consistency_level       = "BoundedStaleness"
@@ -16,6 +17,7 @@ resource "azurerm_cosmosdb_account" "main" {
   geo_location {
     location          = var.primary_region
     failover_priority = 0
+    zone_redundant    = true
   }
 
   capacity {
