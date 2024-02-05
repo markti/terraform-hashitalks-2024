@@ -42,28 +42,33 @@ resource "azurerm_role_assignment" "acr_pull" {
 
 
 resource "azurerm_kubernetes_cluster" "main" {
+  
   name                = "aks-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   sku_tier                          = "Standard"
   kubernetes_version                = "1.27.7"
-  role_based_access_control_enabled = true
-  local_account_disabled            = false
   dns_prefix                        = "${var.application_name}-${var.environment_name}"
   node_resource_group               = "rg-${var.application_name}-${var.environment_name}-${random_string.main.result}-nodes"
+  role_based_access_control_enabled = true  # allows Entra ID identities to be used inside k8s
+  oidc_issuer_enabled               = true  # enables Entra ID SSO
+  workload_identity_enabled         = true  # allows k8s resources to impersonate Entra ID identities
+  local_account_disabled            = false # allows GitHub Actions to use simple authN to manage k8s resources
 
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.aks_cluster.id]
   }
 
+  # allows Entra ID groups to be cluster administrators
   azure_active_directory_role_based_access_control {
     managed                = true
     admin_group_object_ids = var.admin_groups
     azure_rbac_enabled     = true
   }
 
+  # resource and security isolation for k8s system processes
   default_node_pool {
     name                = "npsystem"
     node_count          = var.aks_configuration.system_pool.capacity
@@ -75,30 +80,34 @@ resource "azurerm_kubernetes_cluster" "main" {
     zones               = [1, 2, 3]
   }
 
-  oidc_issuer_enabled       = true
-  workload_identity_enabled = true
-
   network_profile {
+
+    # Azure CNI overlay
     network_plugin    = "azure"
     load_balancer_sku = "standard"
     service_cidr      = "10.32.0.0/16"
     dns_service_ip    = "10.32.0.10"
+
+    # allows for more control over egress traffic in the future
     load_balancer_profile {
       outbound_ip_address_ids = [azurerm_public_ip.aks_outbound_ip.id]
     }
+
   }
 
+  # adds KeyVault Secrets Provider
+  key_vault_secrets_provider {
+    secret_rotation_enabled  = false
+    secret_rotation_interval = "2m"
+  }
+
+  # observability
   microsoft_defender {
     log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   }
 
   oms_agent {
     log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
-  }
-
-  key_vault_secrets_provider {
-    secret_rotation_enabled  = false
-    secret_rotation_interval = "2m"
   }
 }
 

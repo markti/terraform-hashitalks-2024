@@ -23,7 +23,7 @@ resource "kubernetes_deployment" "user_svc" {
       }
 
       spec {
-        service_account_name = "workload"
+        service_account_name = kubernetes_service_account.workload.metadata.0.name
 
         node_selector = {
           agentpool = "npworkload"
