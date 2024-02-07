@@ -29,9 +29,6 @@ resource "azurerm_resource_group_policy_assignment" "cis_v2" {
   policy_definition_id = data.azurerm_policy_set_definition.cis_v2.id
 
   parameters = jsonencode({
-    maximumDaysToRotate = {
-      value = 90
-    }
     "maximumDaysToRotate-d8cf8476-a2ec-4916-896e-992351803c44" = {
       value = 90
     }
