@@ -95,14 +95,6 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   }
 
-  # maintenance
-  maintenance_window_node_os {
-    frequency   = "Weekly"
-    day_of_week = "Wednesday"
-    interval    = 1
-    duration    = "4"
-  }
-
   # adds KeyVault Secrets Provider
   key_vault_secrets_provider {
     secret_rotation_enabled  = false
