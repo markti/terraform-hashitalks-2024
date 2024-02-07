@@ -32,6 +32,9 @@ resource "azurerm_resource_group_policy_assignment" "cis_v2" {
     maximumDaysToRotate = {
       value = 90
     }
+    "maximumDaysToRotate-d8cf8476-a2ec-4916-896e-992351803c44" = {
+      value = 90
+    }
   })
 
 }
