@@ -42,7 +42,7 @@ resource "azurerm_role_assignment" "acr_pull" {
 
 
 resource "azurerm_kubernetes_cluster" "main" {
-  
+
   name                = "aks-${var.application_name}-${var.environment_name}-${random_string.main.result}"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
@@ -93,6 +93,14 @@ resource "azurerm_kubernetes_cluster" "main" {
       outbound_ip_address_ids = [azurerm_public_ip.aks_outbound_ip.id]
     }
 
+  }
+
+  # maintenance
+  maintenance_window_node_os {
+    frequency   = "Weekly"
+    day_of_week = "Wednesday"
+    interval    = 1
+    duration    = "PT4H"
   }
 
   # adds KeyVault Secrets Provider
