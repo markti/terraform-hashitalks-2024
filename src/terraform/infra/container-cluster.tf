@@ -55,6 +55,8 @@ resource "azurerm_kubernetes_cluster" "main" {
   oidc_issuer_enabled               = true  # enables Entra ID SSO
   workload_identity_enabled         = true  # allows k8s resources to impersonate Entra ID identities
   local_account_disabled            = false # allows GitHub Actions to use simple authN to manage k8s resources
+  automatic_channel_upgrade         = "patch"
+  node_os_channel_upgrade           = "NodeImage"
 
   identity {
     type         = "UserAssigned"
