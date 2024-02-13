@@ -169,7 +169,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "workload" {
 
 }
 
-
+/*
 resource "azurerm_kubernetes_cluster_node_pool" "zone1" {
 
   name                  = "npzone1"
@@ -214,4 +214,4 @@ resource "azurerm_kubernetes_cluster_node_pool" "zone3" {
   max_count             = var.aks_configuration.workload_pool.capacity.max
 
 }
-
+*/
