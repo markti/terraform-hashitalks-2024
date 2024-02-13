@@ -97,9 +97,12 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   # maintenance windows
   maintenance_window_auto_upgrade {
-    frequency = "Weekly"
-    interval  = 1
-    duration  = 4
+    frequency   = "Weekly"
+    interval    = 1
+    duration    = 4
+    day_of_week = "Friday"
+    utc_offset  = "-05:00"
+    start_time  = "20:00"
   }
 
   maintenance_window_node_os {
@@ -163,3 +166,50 @@ resource "azurerm_kubernetes_cluster_node_pool" "workload" {
   max_count             = var.aks_configuration.workload_pool.capacity.max
 
 }
+
+
+resource "azurerm_kubernetes_cluster_node_pool" "zone1" {
+
+  name                  = "npzone1"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  vm_size               = var.aks_configuration.workload_pool.sku
+  enable_auto_scaling   = true
+  os_sku                = "Mariner"
+  vnet_subnet_id        = azurerm_subnet.workload.id
+  zones                 = [1]
+  node_count            = var.aks_configuration.workload_pool.capacity.ready
+  min_count             = var.aks_configuration.workload_pool.capacity.min
+  max_count             = var.aks_configuration.workload_pool.capacity.max
+
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "zone2" {
+
+  name                  = "npzone1"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  vm_size               = var.aks_configuration.workload_pool.sku
+  enable_auto_scaling   = true
+  os_sku                = "Mariner"
+  vnet_subnet_id        = azurerm_subnet.workload.id
+  zones                 = [2]
+  node_count            = var.aks_configuration.workload_pool.capacity.ready
+  min_count             = var.aks_configuration.workload_pool.capacity.min
+  max_count             = var.aks_configuration.workload_pool.capacity.max
+
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "zone3" {
+
+  name                  = "npzone1"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  vm_size               = var.aks_configuration.workload_pool.sku
+  enable_auto_scaling   = true
+  os_sku                = "Mariner"
+  vnet_subnet_id        = azurerm_subnet.workload.id
+  zones                 = [3]
+  node_count            = var.aks_configuration.workload_pool.capacity.ready
+  min_count             = var.aks_configuration.workload_pool.capacity.min
+  max_count             = var.aks_configuration.workload_pool.capacity.max
+
+}
+
