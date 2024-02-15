@@ -27,3 +27,7 @@ Connect to your AKS cluster!
 ```
 az aks get-credentials --name aks-aztflab-dev-agyhy3jv --resource-group rg-aztflab-dev-agyhy3jv
 ```
+
+## Azure Policy
+
+https://github.com/Azure/azure-policy/blob/master/built-in-policies/policySetDefinitions/Resilience/Resources_ZoneResilient.json
