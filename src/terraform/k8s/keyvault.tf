@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "shared_secrets" {
     kind       = "SecretProviderClass"
     metadata = {
       name      = "shared-secrets"
-      namespace = "app"
+      namespace = var.k8s_namespace
     }
     spec = {
       provider = "azure"
